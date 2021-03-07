@@ -62,7 +62,23 @@ public class Exo11 {
 				System.out.println("\nPersons Sorted inverse : \n");
 				persons.forEach((Person p) -> System.out.println(p + ""));	
 				
-				
+				// last question
+				List<Person> personsNull = Arrays.asList(
+						 new Person("Rikardo","Kaka",41),
+						 new Person("Lio","Messi",31),
+						 new Person("Michel","Jakson",41),
+						 null,
+						 new Person("Michel","Amande",41),
+						 new Person("Michel","Zidane",41),
+						 null,
+						 new Person("Michel","Max",23),
+						 null
+						 );
+
+				Comparator<Person> cmpNull = Comparator.nullsLast(cmpPer);
+				personsNull.sort(cmpNull);	
+				System.out.println("\nPersons Sorted with null in last: \n");
+				personsNull.forEach((Person p) -> System.out.println(p + ""));
 				
 				//Comparator <Person> cmpPerLastName = Comparator.comparing(p -> p.getLastNameString());
 //				(Person per1, Person per2) -> {
