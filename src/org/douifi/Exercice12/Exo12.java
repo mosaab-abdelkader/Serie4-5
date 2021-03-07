@@ -1,6 +1,8 @@
 package org.douifi.Exercice12;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -22,26 +24,29 @@ public class Exo12 {
 		words.add("ten");
 		words.add("eleven");
 		words.add("twelve");
+		//words.add("aix");
 		
 		System.out.println(" # Liste :"+ words.size());
 		words.forEach(s -> System.out.println(" - "+ s ));
 		//Q2
 		//Predicate <String> isPair = 	 s -> (s.length()%2 == 0 ) ;
-		for (int i = words.size()-1; i>=0 ; i--) {
-			String value = words.get(i);
+		// words1 copy of words to work on in this question
+		List<String> words1 = new ArrayList<>(words);
+		for (int i = words1.size()-1; i>=0 ; i--) {
+			String value = words1.get(i);
 			int len = value.length();
 			if(len%2==0) {
-				words.remove(i);
+				words1.remove(i);
 			}
-			//words.remove(isPair.test(value));
+			//words1.removeIf(isPair.test(value));
 		}
-		System.out.println("Liste without pair length :");
-		System.out.println(" # Liste :"+ words.size());
-		words.forEach(s -> System.out.println( s ));
+		System.out.println("Liste without words of  pair length :");
+		System.out.println(" # Liste :"+ words1.size());
+		words1.forEach(s -> System.out.println( s ));
 		//Q3
 
 		words.replaceAll(String :: toUpperCase);
-		System.out.println("Liste in uppercase :");
+		System.out.println("\n Liste in uppercase :");
 		words.forEach(s -> System.out.println( s ));
 		//3a
 		words.replaceAll(String :: toLowerCase);
@@ -57,21 +62,34 @@ public class Exo12 {
 												  .or(isVoyelleO))))) ;
 		
 		for (String string : words) {
-			System.out.println("does "+ string +" start with  vowel ?"+isVoyelle.test(string));
+			System.out.println("does < "+ string +" > start with  vowel ? "+isVoyelle.test(string));
 			
 		}
 		//3b
-		for (int i=0;i<words.size();i++) {
-			String string =words.get(i); 
-			 String s = string.toUpperCase();
-			 char U = s.charAt(0);
-			 System.out.println("Uper"+ U);
-			if(isVoyelle.test(string)) (words.get(i)).replace(string.charAt(0), U);
+		List<String> words2 = new ArrayList<>(words);
+
+		System.out.println("\n Upper words start with vowel ");
+		for (String string : words2) {
+			
+			if(isVoyelle.test(string)) System.out.println( string.toUpperCase());
+			else System.out.println(string);
+			
 		}
-		words.forEach(s -> System.out.println( s ));
 		//Q4
+
+		Comparator<String> cmpByNameLength = Comparator.comparing(s -> s.length());
+		System.out.println("\n Liste of words sorted by length :");
+		Collections.sort(words,cmpByNameLength);
+		words.forEach(s -> System.out.println( s ));
 		
+		//Q5
+
+		Comparator<String> cmpByAlphab = (s1,s2)-> s1.compareTo(s2);
 		
+		Comparator<String> cmpString = cmpByNameLength.thenComparing(cmpByAlphab);
+		System.out.println("\n Liste of words sorted :");
+		Collections.sort(words,cmpString);
+		words.forEach(s -> System.out.println( s ));
 		
 	}
 
